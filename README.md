@@ -1,1 +1,1 @@
-# Celtic API
+# Football News API
