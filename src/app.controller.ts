@@ -1,13 +1,12 @@
 import { Controller, Get } from '@nestjs/common';
-import { AppService } from './app.service';
 
 @Controller()
 export class AppController {
-  constructor( private readonly appService: AppService ) {
-  }
+	constructor() {
+	}
 
-  @Get()
-  welcome(): string {
-    return this.appService.welcome();
-  }
+	@Get()
+	root(): string {
+		return 'Welcome to Football News';
+	}
 }
