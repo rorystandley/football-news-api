@@ -10,7 +10,7 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 		MongooseModule.forRootAsync( {
 			imports: [ ConfigModule ],
 			useFactory: async ( configService: ConfigService ) => ({
-				uri: configService.get( 'DB_HOST' ),
+				uri: configService.get( 'DB_CONNECTION' ),
 				useNewUrlParser: true,
 				useUnifiedTopology: true
 			}),
