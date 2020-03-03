@@ -1,5 +1,5 @@
 import { Model } from 'mongoose';
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Article } from "./article.interface";
 import { CreateArticleDto } from "./create-article.dto";
@@ -14,11 +14,27 @@ export class ArticleService {
 		return createdCat.save();
 	}
 
-	async findByArticleId( id ): Promise<Article[]> {
-		return this.articleModel.findById( id ).exec();
+	async findByArticleId( id: string ): Promise<Article> {
+		const article = await this.articleModel.findById( id );
+		return {
+			id: article.id,
+			title: article.title,
+			description: article.description,
+			source: article.source,
+			url: article.url,
+			image: article.image
+		}
 	}
 
-	async findByTeam( tenant ): Promise<Article[]> {
-		return this.articleModel.find( { tenant: tenant } ).exec();
+	async findByTeam( tenant: string ): Promise<Article[]> {
+		const articles = await this.articleModel.find( { tenant: tenant } );
+		return articles.map( article => ({
+			id: article.id,
+			title: article.title,
+			description: article.description,
+			source: article.source,
+			url: article.url,
+			image: article.image
+		}) )
 	}
 }
