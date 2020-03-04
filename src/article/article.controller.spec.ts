@@ -1,8 +1,9 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { ArticleController } from './article.controller';
-import { ArticleService } from "./article.service";
-import { Article } from "./article.interface";
+import { ArticleService } from "./services/article.service";
+import { Article } from "./interfaces/article.interface";
 import { getModelToken } from '@nestjs/mongoose';
+import { CreateArticleDto } from "./dto/create-article.dto";
 
 describe( 'Article Controller', () => {
 	let controller: ArticleController;
@@ -19,7 +20,7 @@ describe( 'Article Controller', () => {
 
 	beforeEach( async () => {
 		const module: TestingModule = await Test.createTestingModule( {
-			controllers: [ArticleController],
+			controllers: [ ArticleController ],
 			providers: [
 				ArticleService,
 				{ provide: getModelToken( 'Article' ), useClass: EventModel },
@@ -64,6 +65,24 @@ describe( 'Article Controller', () => {
 			jest.spyOn( articleService, 'findByArticleId' ).mockImplementation( () => result );
 
 			expect( await controller.findById( 'celtic', '123' ) ).toBe( result );
+		} );
+	} );
+
+	describe( 'create', () => {
+		it( 'should create an article', async () => {
+			const article: CreateArticleDto =
+				{
+					title: 'Test Title',
+					description: 'Test escription',
+					source: 'Test source',
+					url: 'https://google.com',
+					image: 'https://google.com/image.jpg',
+					tenant: "celtic"
+				};
+			// @ts-ignore
+			jest.spyOn( articleService, 'create' ).mockImplementation( () => article );
+
+			expect( await controller.create( article ) ).toBe( article );
 		} );
 	} );
 
