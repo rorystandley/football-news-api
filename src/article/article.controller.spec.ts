@@ -31,6 +31,26 @@ describe( 'Article Controller', () => {
 		articleService = module.get<ArticleService>( ArticleService );
 	} );
 
+	describe( 'create', () => {
+		it( 'should create an article', async () => {
+			const data =
+				{
+					title: 'Test Title',
+					description: 'Test escription',
+					source: 'Test source',
+					url: 'https://google.com',
+					image: 'https://google.com/image.jpg',
+					views: 0,
+					tenant: "celtic",
+					timestamp: new Date()
+				};
+			// @ts-ignore
+			jest.spyOn( articleService, 'create' ).mockImplementation( () => data );
+
+			expect( await controller.create( 'team', data ) ).toBe( data );
+		} );
+	} );
+
 	describe( 'findByTeam', () => {
 		it( 'should return an array of articles', async () => {
 			const result = [
@@ -77,12 +97,14 @@ describe( 'Article Controller', () => {
 					source: 'Test source',
 					url: 'https://google.com',
 					image: 'https://google.com/image.jpg',
-					tenant: "celtic"
+					tenant: "celtic",
+					views: 0,
+					timestamp: new Date()
 				};
 			// @ts-ignore
 			jest.spyOn( articleService, 'create' ).mockImplementation( () => article );
 
-			expect( await controller.create( article ) ).toBe( article );
+			expect( await controller.create( 'celtic', article ) ).toBe( article );
 		} );
 	} );
 
