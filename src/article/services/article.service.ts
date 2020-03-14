@@ -9,7 +9,10 @@ export class ArticleService {
 	constructor( @InjectModel( 'Article' ) private readonly articleModel: Model<Article> ) {
 	}
 
-	async create( createArticleDto: CreateArticleDto ): Promise<Article> {
+	async create( team, createArticleDto: CreateArticleDto ): Promise<Article> {
+		createArticleDto.tenant = team;
+		createArticleDto.timestamp = new Date();
+		createArticleDto.views = 0;
 		const createdCat = new this.articleModel( createArticleDto );
 		return createdCat.save();
 	}
