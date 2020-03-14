@@ -26,7 +26,10 @@ export class ArticleController {
 
 	@ApiOperation( { summary: 'Create an article for a team' } )
 	@Post( ':team' )
-	async create( @Body() createArticleDto: CreateArticleDto ) {
+	async create( @Param( 'team' ) team, @Body() createArticleDto: CreateArticleDto ) {
+		createArticleDto.tenant = team;
+		createArticleDto.timestamp = new Date();
+		createArticleDto.views = 0;
 		return await this.articleService.create( createArticleDto );
 	}
 

@@ -6,5 +6,7 @@ export const ArticleSchema = new mongoose.Schema( {
 	url: String,
 	source: String,
 	image: String,
-	tenant: String
+	tenant: String,
+	timestamp: Date,
+	views: Number
 } );

@@ -10,6 +10,7 @@ export class CreateArticleDto {
 	@IsNotEmpty()
 	readonly source: string;
 	readonly image: string;
-	@IsNotEmpty()
-	readonly tenant: string
+	tenant: string;
+	timestamp: Date;
+	views: number
 }
