@@ -1,7 +1,7 @@
 import { Body, Controller, Get, Param, Post } from '@nestjs/common';
 import { ApiTags, ApiOperation, ApiResponse } from '@nestjs/swagger'
-import { CreateArticleDto } from "./create-article.dto";
-import { ArticleService } from "./article.service";
+import { CreateArticleDto } from "./dto/create-article.dto";
+import { ArticleService } from "./services/article.service";
 
 @ApiTags( 'articles' )
 @Controller( 'articles' )
@@ -26,8 +26,8 @@ export class ArticleController {
 
 	@ApiOperation( { summary: 'Create an article for a team' } )
 	@Post( ':team' )
-	async create( @Body() createArticleDto: CreateArticleDto ) {
-		await this.articleService.create( createArticleDto );
+	async create( @Param( 'team' ) team, @Body() createArticleDto: CreateArticleDto ) {
+		return await this.articleService.create( team, createArticleDto );
 	}
 
 }
