@@ -22,7 +22,9 @@ export class ArticleService {
 			description: article.description,
 			source: article.source,
 			url: article.url,
-			image: article.image
+			image: article.image,
+			views: article.views,
+			timestamp: article.timestamp
 		}
 	}
 
